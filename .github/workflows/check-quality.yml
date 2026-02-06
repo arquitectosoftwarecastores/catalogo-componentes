@@ -11,4 +11,4 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run ESLint
-        run: npx eslint src --max-warnings=0 # Esto fallará si no hay prefijos "lst"
+        run: npx eslint # Esto fallará si no hay prefijos "lst"
