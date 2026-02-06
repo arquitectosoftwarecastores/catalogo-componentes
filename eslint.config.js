@@ -69,7 +69,28 @@ export default {
                     }
                 ],
                 'no-console': 0,
-                'prefer-const': 0
+                'prefer-const': 0,
+                "@typescript-eslint/naming-convention": [
+                    "error",
+                    {
+                        "selector": "variable",
+                        "types": ["array"],
+                        "format": ["camelCase"],
+                        "prefix": ["lst"],
+                        "message": "Los elementos iterables (arrays) deben llevar el prefijo 'lst'. Ejemplo: lstUsuarios"
+                    },
+                    {
+                        "selector": "variable",
+                        "format": ["camelCase"],
+                        "leadingUnderscore": "forbid",
+                        "filter": { "regex": "^lst", "match": false }
+                    },
+                    {
+                        "selector": "class",
+                        "format": ["PascalCase"],
+                        "message": "Las clases deben ir en UpperCamelCase (PascalCase) y en singular."
+                    }
+                ]
             }
         },
         {
