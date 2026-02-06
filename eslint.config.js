@@ -31,7 +31,7 @@ export default tseslint.config(
                 
                 {
                     selector: 'variable',
-                    format: 'camelCase'//,
+                    format: ['camelCase']//,
                     //message: 'Las variables deben ir en camelCase.'
                 },
                 {
@@ -41,13 +41,13 @@ export default tseslint.config(
                         regex: '^lst',
                         match: true
                     },
-                    format: 'camelCase',
+                    format: ['camelCase'],
                     prefix: ['lst']//,
                     //message: 'Los arrays deben llevar el prefijo "lst" (ej: lstClientes).'
                 },
                 {
                     selector: 'class',
-                    format: 'PascalCase'//,
+                    format: ['PascalCase']//,
                     //message: 'Las clases deben ir en PascalCase.'
                 }
             ],
