@@ -11,7 +11,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run ESLint
-        run: npm run lint # Esto fallará si no hay prefijos "lst"
+        run: npx eslint "src/**/*.ts" --max-warnings=0 # Esto fallará si no hay prefijos "lst"
 
       # Para Java/Maven
       - name: Set up JDK 17

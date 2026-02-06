@@ -10,7 +10,7 @@
         "watch": "ng build --watch --configuration development",
         "format": "prettier --write \"**/*.{js,mjs,ts,mts,d.ts,html}\" --cache",
         "test": "ng test",
-        "lint": "ng lint --max-warnings=0"
+        "lint": "eslint \"src/**/*.ts\""
     },
     "private": true,
     "dependencies": {
