@@ -5,15 +5,14 @@ import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
 
 export default tseslint.config(
-    // 1. IGNORADOS GLOBALES
+    // 1. Configuración Global de Ignorados
     {
-        ignores: ['**/dist/**', '**/node_modules/**', '**/coverage/**'],
+        ignores: ['**/dist/**', '**/node_modules/**', '**/coverage/**', 'src/assets/**'],
     },
 
-    // 2. CONFIGURACIÓN PARA TYPESCRIPT (Lógica y Componentes)
+    // 2. BLOQUE PARA TYPESCRIPT: Aquí "encerramos" las reglas de TS
     {
         files: ['src/**/*.ts'],
-        // Movemos los "extends" aquí dentro para que solo afecten a archivos .ts
         extends: [
             eslint.configs.recommended,
             ...tseslint.configs.recommended,
@@ -32,59 +31,42 @@ export default tseslint.config(
         rules: {
             "no-console": "error",
             
-            // REGLA DE NOMBRES: Corregida para evitar errores de esquema
+            // Regla de nombres: Aseguramos que no colisionen
             "@typescript-eslint/naming-convention": [
                 "error",
+                {
+                    selector: 'class',
+                    format: ['PascalCase']
+                },
                 {
                     selector: 'variable',
                     format: ['camelCase']
                 },
                 {
                     selector: 'variable',
-                    filter: {
-                        regex: '^lst',
-                        match: true
-                    },
+                    filter: { regex: '^lst', match: true },
                     format: ['camelCase'],
                     prefix: ['lst']
-                },
-                {
-                    selector: 'class',
-                    format: ['PascalCase']
                 }
             ],
 
-            // ESPACIADO DE LÍNEAS
             'padding-line-between-statements': [
                 'error',
                 { blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
-                { blankLine: 'any', prev: ['const', 'let', 'var'], next: ['const', 'let', 'var'] },
-                { blankLine: 'always', prev: '*', next: 'return' },
-                { blankLine: 'always', prev: 'block', next: '*' },
-                { blankLine: 'always', prev: '*', next: 'block' }
+                { blankLine: 'always', prev: '*', next: 'return' }
             ],
 
-            // SELECTORES DE ANGULAR
-            '@angular-eslint/component-selector': [
-                'error',
-                { type: 'element', prefix: 'p', style: 'kebab-case' }
-            ],
-            '@angular-eslint/directive-selector': [
-                'error',
-                { type: 'attribute', prefix: 'p', style: 'camelCase' }
-            ],
-
-            '@angular-eslint/component-class-suffix': ['error', { suffixes: ['Component', 'Page'] }], 
-
-            // PRETTIER (Siempre al final para evitar conflictos)
+            '@angular-eslint/component-class-suffix': ['error', { suffixes: ['Component', 'Page'] }],
+            
+            // Prettier al final para que mande sobre el formato
             ...prettierConfig.rules,
+            "prettier/prettier": "error"
         },
     },
 
-    // 3. CONFIGURACIÓN PARA HTML (Templates de Angular)
+    // 3. BLOQUE PARA HTML: Aquí solo reglas de Angular Template
     {
         files: ['src/**/*.html'],
-        // Usamos extends aquí para que las reglas de TS no toquen el HTML
         extends: [
             ...angular.configs.templateRecommended,
             ...angular.configs.templateAccessibility,
