@@ -29,8 +29,8 @@ export default tseslint.config(
                 "error",
                 {
                     "selector": "variable",
-                    "format": ["camelCase"],
-                    "message": "Las variables deben ir en camelCase."
+                    "format": ["camelCase"]//,
+                    //"message": "Las variables deben ir en camelCase."
                 },
                 {
                     "selector": "variable",
@@ -40,13 +40,13 @@ export default tseslint.config(
                         "match": true
                     },
                     "format": ["camelCase"],
-                    "prefix": ["lst"],
-                    "message": "Los arrays deben llevar el prefijo 'lst' (ej: lstClientes)."
+                    "prefix": ["lst"]//,
+                    //"message": "Los arrays deben llevar el prefijo 'lst' (ej: lstClientes)."
                 },
                 {
                     "selector": "class",
-                    "format": ["PascalCase"],
-                    "message": "Las clases deben ir en PascalCase."
+                    "format": ["PascalCase"]//,
+                    //"message": "Las clases deben ir en PascalCase."
                 }
             ],
             'padding-line-between-statements': [
