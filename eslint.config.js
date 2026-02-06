@@ -1,5 +1,5 @@
 export default {
-    root: true,
+    
     ignorePatterns: ['**/dist/**'],
     plugins: ['prettier'],
     extends: ['prettier'],
