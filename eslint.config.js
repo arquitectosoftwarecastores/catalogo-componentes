@@ -1,6 +1,6 @@
 export default {
     
-    ignorePatterns: ['**/dist/**'],
+    ignores: ['**/dist/**'],
     plugins: ['prettier'],
     extends: ['prettier'],
     rules: {
