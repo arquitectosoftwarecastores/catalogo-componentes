@@ -25,28 +25,30 @@ export default tseslint.config(
             'prettier': prettierPlugin
         },
         rules: {
+            "no-console": "error",
             "@typescript-eslint/naming-convention": [
                 "error",
+                
                 {
-                    "selector": "variable",
-                    "format": ["camelCase"]//,
-                    //"message": "Las variables deben ir en camelCase."
+                    selector: 'variable',
+                    format: 'camelCase',
+                    message: 'Las variables deben ir en camelCase.'
                 },
                 {
-                    "selector": "variable",
-                    "type": ["array"],
-                    "filter": {
-                        "regex": "^lst",
-                        "match": true
+                    selector: 'variable',
+                    type: 'array',
+                    filter: {
+                        regex: '^lst',
+                        match: true
                     },
-                    "format": ["camelCase"],
-                    "prefix": ["lst"]//,
-                    //"message": "Los arrays deben llevar el prefijo 'lst' (ej: lstClientes)."
+                    format: 'camelCase',
+                    prefix: ['lst'],
+                    message: 'Los arrays deben llevar el prefijo "lst" (ej: lstClientes).'
                 },
                 {
-                    "selector": "class",
-                    "format": ["PascalCase"]//,
-                    //"message": "Las clases deben ir en PascalCase."
+                    selector: 'class',
+                    format: 'PascalCase',
+                    message: 'Las clases deben ir en PascalCase.'
                 }
             ],
             'padding-line-between-statements': [
