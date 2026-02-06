@@ -34,7 +34,7 @@ export default tseslint.config(
         "error",
         {
           "selector": "variable",
-          "types": ["array"],
+          "type": ["array"],
           "format": ["camelCase"],
           "prefix": ["lst"],
           "message": "Los arrays deben llevar el prefijo 'lst' (ej: lstClientes)."
