@@ -377,7 +377,7 @@ export class TableDemo implements OnInit {
 
     customers2_2: Customer[] = [];
 
-    customers3: Customer[] = [];
+    customers3_3: Customer[] = [];
 
     selectedCustomers1: Customer[] = [];
 
