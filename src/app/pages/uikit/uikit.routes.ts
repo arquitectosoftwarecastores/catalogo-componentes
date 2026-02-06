@@ -17,7 +17,6 @@ import { MenuDemo } from './menudemo';
 import { AnimatedDemo } from './animateddemo';
 
 export default [
-
     { path: 'button', data: { breadcrumb: 'Button' }, component: ButtonDemo },
     { path: 'charts', data: { breadcrumb: 'Charts' }, component: ChartDemo },
     { path: 'file', data: { breadcrumb: 'File' }, component: FileDemo },

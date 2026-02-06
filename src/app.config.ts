@@ -10,7 +10,7 @@ import player from 'lottie-web';
 
 export const appConfig: ApplicationConfig = {
     providers: [
-        provideLottieOptions({ player: () => player, }),
+        provideLottieOptions({ player: () => player }),
         provideRouter(appRoutes, withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }), withEnabledBlockingInitialNavigation()),
         provideHttpClient(withFetch()),
         provideAnimationsAsync(),

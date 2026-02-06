@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { FluidModule } from 'primeng/fluid';
 import { debounceTime, Subscription } from 'rxjs';
@@ -50,7 +50,7 @@ import { LayoutService } from '../../layout/service/layout.service';
         </p-fluid>
     `
 })
-export class ChartDemo {
+export class ChartDemo implements OnInit, OnDestroy {
     lineData: any;
 
     barData: any;
@@ -84,8 +84,11 @@ export class ChartDemo {
 
     initCharts() {
         const documentStyle = getComputedStyle(document.documentElement);
+
         const textColor = documentStyle.getPropertyValue('--text-color');
+
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
         this.barData = {
@@ -239,14 +242,14 @@ export class ChartDemo {
             scales: {
                 r: {
                     grid: {
-                        color: surfaceBorder,
+                        color: surfaceBorder
                     },
                     ticks: {
                         display: false,
                         color: textColorSecondary
-                    },
-                },
-            },
+                    }
+                }
+            }
         };
 
         this.radarData = {

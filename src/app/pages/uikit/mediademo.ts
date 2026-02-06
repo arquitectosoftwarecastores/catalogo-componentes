@@ -41,7 +41,7 @@ import { ImageCompareModule } from 'primeng/imagecompare';
         </div>
         <div class="grid grid-cols-2 grid-rows-1 gap-4">
             <div class="card flex col-lg-2">
-                <p-imagecompare class="shadow-lg rounded-2xl" >
+                <p-imagecompare class="shadow-lg rounded-2xl">
                     <ng-template #left>
                         <img src="https://primefaces.org/cdn/primevue/images/compare/island1.jpg" />
                     </ng-template>
@@ -63,7 +63,7 @@ import { ImageCompareModule } from 'primeng/imagecompare';
                 </p-galleria>
             </div>
         </div>
-        `,
+    `,
     providers: [ProductService, PhotoService]
 })
 export class MediaDemo implements OnInit {

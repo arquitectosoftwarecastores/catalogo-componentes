@@ -18,47 +18,35 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { TagModule } from 'primeng/tag';
 import { Customer, CustomerService, Representative } from '../service/customer.service';
 import { Product, ProductService } from '../service/product.service';
-import { StyleClass } from "primeng/styleclass";
+import { StyleClass } from 'primeng/styleclass';
 
-interface expandedRows {
-    [key: string]: boolean;
-}
+type expandedRows = Record<string, boolean>;
 
 @Component({
     selector: 'app-table-demo',
     standalone: true,
     imports: [
-    TableModule,
-    MultiSelectModule,
-    SelectModule,
-    InputIconModule,
-    TagModule,
-    InputTextModule,
-    SliderModule,
-    ProgressBarModule,
-    ToggleButtonModule,
-    ToastModule,
-    CommonModule,
-    FormsModule,
-    ButtonModule,
-    RatingModule,
-    RippleModule,
-    IconFieldModule,
-    StyleClass
-],
+        TableModule,
+        MultiSelectModule,
+        SelectModule,
+        InputIconModule,
+        TagModule,
+        InputTextModule,
+        SliderModule,
+        ProgressBarModule,
+        ToggleButtonModule,
+        ToastModule,
+        CommonModule,
+        FormsModule,
+        ButtonModule,
+        RatingModule,
+        RippleModule,
+        IconFieldModule,
+        StyleClass
+    ],
     template: ` <div class="card">
             <div class="font-semibold text-xl mb-4">Filtering</div>
-            <p-table
-                #dt1
-                [value]="customers1"
-                dataKey="id"
-                [rows]="10"
-                [loading]="loading"
-                [rowHover]="true"
-                [paginator]="true"
-                [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
-                responsiveLayout="scroll"
-            >
+            <p-table #dt1 [value]="customers1" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" [paginator]="true" [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']" responsiveLayout="scroll">
                 <ng-template #caption>
                     <div class="flex flex-start items-center flex-column sm:flex-row">
                         <p-iconfield iconPosition="left">
@@ -180,13 +168,13 @@ interface expandedRows {
                             {{ customer.balance | currency: 'USD' : 'symbol' }}
                         </td>
                         <td>
-                            <p-tag [value]="customer.status.toLowerCase()" [severity]="getSeverity(customer.status.toLowerCase())"  />
+                            <p-tag [value]="customer.status.toLowerCase()" [severity]="getSeverity(customer.status.toLowerCase())" />
                         </td>
                         <td>
                             <p-progressbar [value]="customer.activity" [showValue]="false" [style]="{ height: '0.5rem' }" />
                         </td>
                         <td class="text-center">
-                            <p-tag [value]="customer.status.toLowerCase()" [severity]="getSeverity(customer.status.toLowerCase())"  />
+                            <p-tag [value]="customer.status.toLowerCase()" [severity]="getSeverity(customer.status.toLowerCase())" />
                         </td>
                     </tr>
                 </ng-template>
@@ -395,11 +383,11 @@ export class TableDemo implements OnInit {
 
     activityValues: number[] = [0, 100];
 
-    isExpanded: boolean = false;
+    isExpanded = false;
 
-    balanceFrozen: boolean = false;
+    balanceFrozen = false;
 
-    loading: boolean = true;
+    loading = true;
 
     @ViewChild('filter') filter!: ElementRef;
 
@@ -453,13 +441,16 @@ export class TableDemo implements OnInit {
         if (this.customers3) {
             for (let i = 0; i < this.customers3.length; i++) {
                 const rowData = this.customers3[i];
+
                 const representativeName = rowData?.representative?.name || '';
 
                 if (i === 0) {
                     this.rowGroupMetadata[representativeName] = { index: 0, size: 1 };
                 } else {
                     const previousRowData = this.customers3[i - 1];
+
                     const previousRowGroup = previousRowData?.representative?.name;
+
                     if (representativeName === previousRowGroup) {
                         this.rowGroupMetadata[representativeName].size++;
                     } else {
@@ -524,7 +515,7 @@ export class TableDemo implements OnInit {
         let total = 0;
 
         if (this.customers2) {
-            for (let customer of this.customers2) {
+            for (const customer of this.customers2) {
                 if (customer.representative?.name === name) {
                     total++;
                 }

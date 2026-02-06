@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, Renderer2, ViewChild, OnChanges, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
@@ -6,7 +6,7 @@ import { AppTopbar } from './app.topbar';
 import { AppSidebar } from './app.sidebar';
 import { LayoutService } from '../service/layout.service';
 import { ScrollPanel } from 'primeng/scrollpanel';
-import { CardTitleComponent } from "./card-title/card-title.component";
+import { CardTitleComponent } from './card-title/card-title.component';
 
 @Component({
     selector: 'app-layout',
@@ -17,8 +17,8 @@ import { CardTitleComponent } from "./card-title/card-title.component";
         <app-sidebar></app-sidebar>
         <p-scroll-panel #scrollPanel class="layout-main-container" [style]="{ height: 'calc(100vh - 8rem)' }">
             <div class="layout-main">
-                @if (layoutService.showCardTitle()) {    
-                    <app-card-title/>
+                @if (layoutService.showCardTitle()) {
+                    <app-card-title />
                 }
                 <router-outlet></router-outlet>
             </div>
@@ -26,8 +26,7 @@ import { CardTitleComponent } from "./card-title/card-title.component";
         <div class="layout-mask animate-fadein"></div>
     </div> `
 })
-export class AppLayout implements OnInit {
-
+export class AppLayout implements OnInit, OnChanges, OnDestroy {
     public _activatedRoute = inject(ActivatedRoute);
 
     overlayMenuOpenSubscription: Subscription;
@@ -40,15 +39,16 @@ export class AppLayout implements OnInit {
 
     @ViewChild('scrollPanel') scrollPanel!: ScrollPanel;
 
-    ngOnChanges(){
-        console.log(this._activatedRoute.url.subscribe( url => {
-      console.log(url);}));
+    ngOnChanges() {
+        console.log(
+            this._activatedRoute.url.subscribe((url) => {
+                console.log(url);
+            })
+        );
     }
 
     ngOnInit() {
-        this.router.events.pipe(
-            filter(event => event instanceof NavigationEnd)
-        ).subscribe(() => {
+        this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
             setTimeout(() => {
                 this.scrollPanel?.scrollTop(0);
             });
@@ -58,7 +58,8 @@ export class AppLayout implements OnInit {
     constructor(
         public layoutService: LayoutService,
         public renderer: Renderer2,
-        public router: Router,private route: ActivatedRoute
+        public router: Router,
+        private route: ActivatedRoute
     ) {
         this.overlayMenuOpenSubscription = this.layoutService.overlayOpen$.subscribe(() => {
             if (!this.menuOutsideClickListener) {
@@ -81,7 +82,9 @@ export class AppLayout implements OnInit {
 
     isOutsideClicked(event: MouseEvent) {
         const sidebarEl = document.querySelector('.layout-sidebar');
+
         const topbarEl = document.querySelector('.layout-menu-button');
+
         const eventTarget = event.target as Node;
 
         return !(sidebarEl?.isSameNode(eventTarget) || sidebarEl?.contains(eventTarget) || topbarEl?.isSameNode(eventTarget) || topbarEl?.contains(eventTarget));

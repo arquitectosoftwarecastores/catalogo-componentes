@@ -3,21 +3,21 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AnimationsSvgComponent } from './animations-svg.component';
 
 describe('AnimationsSvgComponent', () => {
-  let component: AnimationsSvgComponent;
-  let fixture: ComponentFixture<AnimationsSvgComponent>;
+    let component: AnimationsSvgComponent;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AnimationsSvgComponent]
-    })
-    .compileComponents();
+    let fixture: ComponentFixture<AnimationsSvgComponent>;
 
-    fixture = TestBed.createComponent(AnimationsSvgComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [AnimationsSvgComponent]
+        }).compileComponents();
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+        fixture = TestBed.createComponent(AnimationsSvgComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

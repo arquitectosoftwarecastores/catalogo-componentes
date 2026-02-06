@@ -92,7 +92,7 @@ import { Editor } from 'primeng/editor';
                     </p-floatlabel>
 
                     <div class="font-semibold text-xl">Textarea</div>
-                    <p-editor [(ngModel)]="text"  placeholder="Your Message" />
+                    <p-editor [(ngModel)]="text" placeholder="Your Message" />
 
                     <div class="font-semibold text-xl">AutoComplete</div>
                     <p-autocomplete [(ngModel)]="selectedAutoValue" [suggestions]="autoFilteredValue" optionLabel="name" placeholder="Search" dropdown multiple display="chip" (completeMethod)="filterCountry($event)" />
@@ -101,7 +101,7 @@ import { Editor } from 'primeng/editor';
                     <p-datepicker [showIcon]="true" iconDisplay="input" [showButtonBar]="true" [(ngModel)]="calendarValue"></p-datepicker>
 
                     <div class="font-semibold text-xl">TimePicker</div>
-                    <p-datepicker [showIcon]="true" iconDisplay="input" [(ngModel)]="timeValue" [timeOnly]="true" >
+                    <p-datepicker [showIcon]="true" iconDisplay="input" [(ngModel)]="timeValue" [timeOnly]="true">
                         <ng-template #inputicon let-clickCallBack="clickCallBack">
                             <i class="pi pi-clock" (click)="clickCallBack($event)"></i>
                         </ng-template>
@@ -261,17 +261,17 @@ export class InputDemo implements OnInit {
 
     inputNumberValue: any = null;
 
-    sliderValue: number = 50;
+    sliderValue = 50;
 
     ratingValue: any = null;
 
-    colorValue: string = '#1976D2';
+    colorValue = '#1976D2';
 
     radioValue: any = null;
 
     checkboxValue: any[] = [];
 
-    switchValue: boolean = false;
+    switchValue = false;
 
     listboxValues: any[] = [
         { name: 'New York', code: 'NY' },
@@ -308,15 +308,15 @@ export class InputDemo implements OnInit {
 
     multiselectSelectedCountries!: Country[];
 
-    toggleValue: boolean = false;
+    toggleValue = false;
 
     selectButtonValue: any = null;
 
     selectButtonValues: any = [{ name: 'Option 1' }, { name: 'Option 2' }, { name: 'Option 3' }];
 
-    knobValue: number = 50;
+    knobValue = 50;
 
-    inputGroupValue: boolean = false;
+    inputGroupValue = false;
 
     treeSelectNodes!: TreeNode[];
 
@@ -329,7 +329,6 @@ export class InputDemo implements OnInit {
     text: string | undefined;
 
     ngOnInit() {
-
         this.countryService.getCountries().then((countries) => {
             this.autoValue = countries;
         });
@@ -339,10 +338,12 @@ export class InputDemo implements OnInit {
 
     filterCountry(event: AutoCompleteCompleteEvent) {
         const filtered: any[] = [];
+
         const query = event.query;
 
         for (let i = 0; i < (this.autoValue as any[]).length; i++) {
             const country = (this.autoValue as any[])[i];
+
             if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
                 filtered.push(country);
             }

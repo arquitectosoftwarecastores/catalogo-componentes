@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { debounceTime, Subscription } from 'rxjs';
 import { LayoutService } from '../../../layout/service/layout.service';
@@ -12,7 +12,7 @@ import { LayoutService } from '../../../layout/service/layout.service';
         <p-chart type="bar" [data]="chartData" [options]="chartOptions" class="h-80" />
     </div>`
 })
-export class RevenueStreamWidget {
+export class RevenueStreamWidget implements OnInit, OnDestroy {
     chartData: any;
 
     chartOptions: any;
@@ -31,8 +31,11 @@ export class RevenueStreamWidget {
 
     initChart() {
         const documentStyle = getComputedStyle(document.documentElement);
+
         const textColor = documentStyle.getPropertyValue('--text-color');
+
         const borderColor = documentStyle.getPropertyValue('--surface-border');
+
         const textMutedColor = documentStyle.getPropertyValue('--text-color-secondary');
 
         this.chartData = {

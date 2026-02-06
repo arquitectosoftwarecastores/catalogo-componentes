@@ -63,8 +63,6 @@ export class TreeDemo implements OnInit {
             { field: 'type', header: 'Type' }
         ];
 
-        this.selectedTreeTableValue = {
-
-        };
+        this.selectedTreeTableValue = {};
     }
 }

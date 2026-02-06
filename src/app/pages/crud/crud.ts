@@ -35,25 +35,25 @@ interface ExportColumn {
     selector: 'app-crud',
     standalone: true,
     imports: [
-    CommonModule,
-    TableModule,
-    FormsModule,
-    ButtonModule,
-    RippleModule,
-    ToastModule,
-    ToolbarModule,
-    RatingModule,
-    InputTextModule,
-    TextareaModule,
-    SelectModule,
-    RadioButtonModule,
-    InputNumberModule,
-    DialogModule,
-    TagModule,
-    InputIconModule,
-    IconFieldModule,
-    ConfirmDialogModule,
-],
+        CommonModule,
+        TableModule,
+        FormsModule,
+        ButtonModule,
+        RippleModule,
+        ToastModule,
+        ToolbarModule,
+        RatingModule,
+        InputTextModule,
+        TextareaModule,
+        SelectModule,
+        RadioButtonModule,
+        InputNumberModule,
+        DialogModule,
+        TagModule,
+        InputIconModule,
+        IconFieldModule,
+        ConfirmDialogModule
+    ],
     template: `
         <div class="card">
             <p-table
@@ -74,17 +74,16 @@ interface ExportColumn {
                 [rowsPerPageOptions]="[10, 20, 30]"
             >
                 <ng-template #caption>
-                
                     <div class="flex items-center justify-between">
                         <h5 class="m-0">Manage Products</h5>
                         <div>
                             <p-iconfield style="display: inline">
                                 <p-inputicon styleClass="pi pi-search" />
                                 <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
-                            </p-iconfield> 
-                            <p-button class="ml-2" icon="pi pi-plus" severity="primary"  (onClick)="openNew()"/>
+                            </p-iconfield>
+                            <p-button class="ml-2" icon="pi pi-plus" severity="primary" (onClick)="openNew()" />
                             <p-button class="ml-2" icon="pi pi-trash" severity="secondary" outlined (onClick)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length" />
-                            <p-button class="ml-2" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" /> 
+                            <p-button class="ml-2" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
                         </div>
                     </div>
                 </ng-template>
@@ -93,9 +92,10 @@ interface ExportColumn {
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox />
                         </th>
-                        <th pSortableColumn="code" style="min-width: 16rem">Code
-                        <p-sortIcon field="code" />
-                        <p-columnFilter type="text" field="code" display="menu" placeholder="Search by code"></p-columnFilter>
+                        <th pSortableColumn="code" style="min-width: 16rem">
+                            Code
+                            <p-sortIcon field="code" />
+                            <p-columnFilter type="text" field="code" display="menu" placeholder="Search by code"></p-columnFilter>
                         </th>
                         <th pSortableColumn="name" style="min-width:16rem">
                             Name
@@ -160,8 +160,6 @@ interface ExportColumn {
                 </ng-template>
             </p-table>
         </div>
-        
-        
 
         <p-dialog appendTo="body" [(visible)]="productDialog" [style]="{ width: '450px' }" header="Product Details" [modal]="true">
             <ng-template #content>
@@ -228,8 +226,7 @@ interface ExportColumn {
     providers: [MessageService, ProductService, ConfirmationService]
 })
 export class Crud implements OnInit {
-
-    productDialog: boolean = false;
+    productDialog = false;
 
     products = signal<Product[]>([]);
 
@@ -237,7 +234,7 @@ export class Crud implements OnInit {
 
     selectedProducts!: Product[] | null;
 
-    submitted: boolean = false;
+    submitted = false;
 
     statuses!: any[];
 
@@ -341,6 +338,7 @@ export class Crud implements OnInit {
 
     findIndexById(id: string): number {
         let index = -1;
+
         for (let i = 0; i < this.products().length; i++) {
             if (this.products()[i].id === id) {
                 index = i;
@@ -353,10 +351,13 @@ export class Crud implements OnInit {
 
     createId(): string {
         let id = '';
-        var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (var i = 0; i < 5; i++) {
+
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+        for (let i = 0; i < 5; i++) {
             id += chars.charAt(Math.floor(Math.random() * chars.length));
         }
+
         return id;
     }
 
@@ -375,7 +376,8 @@ export class Crud implements OnInit {
 
     saveProduct() {
         this.submitted = true;
-        let _products = this.products();
+        const _products = this.products();
+
         if (this.product.name?.trim()) {
             if (this.product.id) {
                 _products[this.findIndexById(this.product.id)] = this.product;

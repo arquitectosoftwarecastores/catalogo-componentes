@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, computed, inject, PLATFORM_ID, signal } from '@angular/core';
+import { Component, computed, inject, PLATFORM_ID, signal, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { $t, updatePreset, updateSurfacePalette } from '@primeng/themes';
@@ -18,7 +18,7 @@ const presets = {
 
 declare type KeyOfType<T> = keyof T extends infer U ? U : never;
 
-declare type SurfacesType = {
+declare interface SurfacesType {
     name?: string;
     palette?: {
         0?: string;
@@ -34,7 +34,7 @@ declare type SurfacesType = {
         900?: string;
         950?: string;
     };
-};
+}
 
 @Component({
     selector: 'app-configurator',
@@ -95,8 +95,11 @@ declare type SurfacesType = {
         class: 'hidden absolute top-[3.25rem] right-0 w-72 p-4 bg-surface-0 dark:bg-surface-900 border border-surface rounded-border origin-top shadow-[0px_3px_5px_rgba(0,0,0,0.02),0px_0px_2px_rgba(0,0,0,0.05),0px_1px_4px_rgba(0,0,0,0.08)]'
     }
 })
-export class AppConfigurator {
-    public cardTitleOptions = [{ label: 'Show', value: true }, { label: 'Hide', value: false }];
+export class AppConfigurator implements OnInit {
+    public cardTitleOptions = [
+        { label: 'Show', value: true },
+        { label: 'Hide', value: false }
+    ];
     public showCardTitle = computed(() => this.layoutService.layoutConfig().showCardTitle);
 
     router = inject(Router);
@@ -127,26 +130,24 @@ export class AppConfigurator {
         if (isPlatformBrowser(this.platformId)) {
             this.onPresetChange(this.layoutService.layoutConfig().preset);
         }
-        
     }
 
     surfaces: SurfacesType[] = [
-
         {
             name: 'castores',
             palette: {
-                0: '#ffffff',   // Fondo de Divs 
-                50: '#ececec',  // Select empty 
+                0: '#ffffff', // Fondo de Divs
+                50: '#ececec', // Select empty
                 100: '#dedfdf', //Fondo
                 200: '#c4c4c6', // lineas de tabla
                 300: '#adaeb0', // Porcentaje vacio
-                400: '#97979b', // Iconos en input 
+                400: '#97979b', // Iconos en input
                 500: '#7f8084', // Texto en input
-                600: '#6a6b70', // Secondary 
+                600: '#6a6b70', // Secondary
                 700: '#55565b', //  Color principal de texto
                 800: '#3f4046', // ???
                 900: '#2c2c34', // Texto resaltado
-                950: '#16161d'  // Color contraste
+                950: '#16161d' // Color contraste
             }
         }
     ];
@@ -163,59 +164,60 @@ export class AppConfigurator {
 
     primaryColors = computed<SurfacesType[]>(() => {
         const presetPalette = presets[this.layoutService.layoutConfig().preset as KeyOfType<typeof presets>].primitive;
-         const colors = [ 'amber', 'red', 'noir'];
+
+        const colors = ['amber', 'red', 'noir'];
+
         const palettes: SurfacesType[] = [];
 
-        
         palettes.push({
             name: 'CastoresR',
             palette: {
-                50: "#FFA6A6",
-                100: "#F56D6D",
-                200: "#D2323A",
-                300: "#CF000A",
-                400: "#BA0612",
-                500: "#A4000B",
-                600: "#820009",
-                700: "#600006",
-                800: "#450509",
-                900: "#2E0808",
-                950: "#1B0404"
+                50: '#FFA6A6',
+                100: '#F56D6D',
+                200: '#D2323A',
+                300: '#CF000A',
+                400: '#BA0612',
+                500: '#A4000B',
+                600: '#820009',
+                700: '#600006',
+                800: '#450509',
+                900: '#2E0808',
+                950: '#1B0404'
             }
         });
         palettes.push({
             name: 'CastoresA',
             palette: {
-                50: "#FFE589",
-                100: "#FFD12E",
-                200: "#FFC337",
-                300: "#FFB200",
-                400: "#EFA700",
-                500: "#D19201",
-                600: "#B27E04",
-                700: "#AC872F",
-                800: "#8F7100",
-                900: "#614504",
-                950: "#392800"
+                50: '#FFE589',
+                100: '#FFD12E',
+                200: '#FFC337',
+                300: '#FFB200',
+                400: '#EFA700',
+                500: '#D19201',
+                600: '#B27E04',
+                700: '#AC872F',
+                800: '#8F7100',
+                900: '#614504',
+                950: '#392800'
             }
         });
         palettes.push({
             name: 'CastoresN',
             palette: {
-                50: "#FFFFFF",
-                100: "#C3C3C3",
-                200: "#B3B3B3",
-                300: "#A2A2A2",
-                400: "#919191",
-                500: "#6F6F6F",
-                600: "#5E5E5E",
-                700: "#3C3C3C",
-                800: "#1D1D1D",
-                900: "#0C0C0C",
-                950: "#000000"
+                50: '#FFFFFF',
+                100: '#C3C3C3',
+                200: '#B3B3B3',
+                300: '#A2A2A2',
+                400: '#919191',
+                500: '#6F6F6F',
+                600: '#5E5E5E',
+                700: '#3C3C3C',
+                800: '#1D1D1D',
+                900: '#0C0C0C',
+                950: '#000000'
             }
         });
-        
+
         colors.forEach((color) => {
             palettes.push({
                 name: color,
@@ -226,8 +228,9 @@ export class AppConfigurator {
         return palettes;
     });
 
- getPresetExt() {
+    getPresetExt() {
         const color: SurfacesType = this.primaryColors().find((c) => c.name === this.selectedPrimaryColor()) || {};
+
         const preset = this.layoutService.layoutConfig().preset;
 
         if (color.name === 'noir') {
@@ -279,41 +282,41 @@ export class AppConfigurator {
                 }
             };
         } else if (preset === 'Nora') {
-                return {
-                    semantic: {
-                        primary: color.palette,
-                        colorScheme: {
-                            light: {
-                                primary: {
-                                    color: '{primary.600}',
-                                    contrastColor: '#ffffff',
-                                    hoverColor: '{primary.700}',
-                                    activeColor: '{primary.800}'
-                                },
-                                highlight: {
-                                    background: '{primary.600}',
-                                    focusBackground: '{primary.700}',
-                                    color: '#ffffff',
-                                    focusColor: '#ffffff'
-                                }
+            return {
+                semantic: {
+                    primary: color.palette,
+                    colorScheme: {
+                        light: {
+                            primary: {
+                                color: '{primary.600}',
+                                contrastColor: '#ffffff',
+                                hoverColor: '{primary.700}',
+                                activeColor: '{primary.800}'
                             },
-                            dark: {
-                                primary: {
-                                    color: '{primary.500}',
-                                    contrastColor: '#ffffff',
-                                    hoverColor: '{primary.400}',
-                                    activeColor: '{primary.300}'
-                                },
-                                highlight: {
-                                    background: '{primary.500}',
-                                    focusBackground: '{primary.400}',
-                                    color: '{surface.900}',
-                                    focusColor: '{surface.900}'
-                                }
+                            highlight: {
+                                background: '{primary.600}',
+                                focusBackground: '{primary.700}',
+                                color: '#ffffff',
+                                focusColor: '#ffffff'
+                            }
+                        },
+                        dark: {
+                            primary: {
+                                color: '{primary.500}',
+                                contrastColor: '#ffffff',
+                                hoverColor: '{primary.400}',
+                                activeColor: '{primary.300}'
+                            },
+                            highlight: {
+                                background: '{primary.500}',
+                                focusBackground: '{primary.400}',
+                                color: '{surface.900}',
+                                focusColor: '{surface.900}'
                             }
                         }
                     }
-                };
+                }
+            };
         } else {
             return {
                 semantic: {
@@ -375,7 +378,9 @@ export class AppConfigurator {
     onPresetChange(event: any) {
         this.layoutService.layoutConfig.update((state) => ({ ...state, preset: event }));
         const preset = presets[event as KeyOfType<typeof presets>];
+
         const surfacePalette = this.surfaces.find((s) => s.name === this.selectedSurfaceColor())?.palette;
+
         $t().preset(preset).preset(this.getPresetExt()).surfacePalette(surfacePalette).use({ useDefaultOptions: true });
     }
 

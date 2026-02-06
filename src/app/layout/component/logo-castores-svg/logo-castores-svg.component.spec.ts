@@ -3,21 +3,21 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LogoCastoresSvgComponent } from './logo-castores-svg.component';
 
 describe('LogoCastoresSvgComponent', () => {
-  let component: LogoCastoresSvgComponent;
-  let fixture: ComponentFixture<LogoCastoresSvgComponent>;
+    let component: LogoCastoresSvgComponent;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [LogoCastoresSvgComponent]
-    })
-    .compileComponents();
+    let fixture: ComponentFixture<LogoCastoresSvgComponent>;
 
-    fixture = TestBed.createComponent(LogoCastoresSvgComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [LogoCastoresSvgComponent]
+        }).compileComponents();
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+        fixture = TestBed.createComponent(LogoCastoresSvgComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

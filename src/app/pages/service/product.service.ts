@@ -1286,14 +1286,16 @@ export class ProductService {
         };
 
         product.image = product.name?.toLocaleLowerCase().split(/[ ,]+/).join('-') + '.jpg';
+
         return product;
     }
 
     generateId() {
         let text = '';
-        let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-        for (var i = 0; i < 5; i++) {
+        const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+        for (let i = 0; i < 5; i++) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         }
 

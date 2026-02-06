@@ -67,7 +67,7 @@ import { CardModule } from 'primeng/card';
             <div class="md:w-1/2">
                 <div class="card">
                     <div class="font-semibold text-xl mb-4">Overlay Menu</div>
-                    <p-menu appendTo="body" #menu [popup]="true" [model]="overlayMenuItems" ></p-menu>
+                    <p-menu appendTo="body" #menu [popup]="true" [model]="overlayMenuItems"></p-menu>
                     <button type="button" pButton icon="pi pi-chevron-down" label="Options" (click)="menu.toggle($event)" style="width:auto"></button>
                 </div>
             </div>
@@ -79,11 +79,9 @@ import { CardModule } from 'primeng/card';
                 </div>
             </div>
         </div>
-
     `
 })
 export class MenuDemo {
-    
     overlayMenuItems = [
         {
             label: 'Save',
