@@ -5,6 +5,67 @@ import { FluidModule } from 'primeng/fluid';
 import { debounceTime, Subscription } from 'rxjs';
 import { LayoutService } from '../../layout/service/layout.service';
 
+export interface ChartDataset {
+    label?: string;
+    data: number[];
+    backgroundColor?: string | string[];
+    borderColor?: string | string[];
+}
+
+export interface LineDataset extends ChartDataset {
+    fill?: boolean;
+    tension?: number;
+}
+
+export interface PieDataset extends ChartDataset {
+    hoverBackgroundColor?: string[];
+}
+
+export interface RadarDataset extends ChartDataset {
+    pointBackgroundColor?: string;
+    pointBorderColor?: string;
+    pointHoverBackgroundColor?: string;
+    pointHoverBorderColor?: string;
+}
+
+export interface ChartData<T = ChartDataset> {
+    labels: string[];
+    datasets: T[];
+}
+
+export interface ChartOptions {
+    maintainAspectRatio?: boolean;
+    aspectRatio?: number;
+    plugins?: {
+        legend?: {
+            labels?: {
+                color?: string;
+                usePointStyle?: boolean;
+            };
+        };
+    };
+    scales?: Record<
+        string,
+        {
+            stacked?: boolean;
+            display?: boolean;
+            ticks?: {
+                color?: string;
+                display?: boolean;
+                font?: { weight?: number | string };
+            };
+            grid?: {
+                color?: string;
+                display?: boolean;
+                drawBorder?: boolean;
+            };
+            pointLabels?: {
+                color?: string;
+            };
+        }
+    >;
+}
+
 @Component({
     selector: 'app-chart-demo',
     standalone: true,
@@ -51,27 +112,22 @@ import { LayoutService } from '../../layout/service/layout.service';
     `
 })
 export class ChartDemo implements OnInit, OnDestroy {
-    lineData: any;
+    barData!: ChartData;
+    barOptions!: ChartOptions;
 
-    barData: any;
+    lineData!: ChartData<LineDataset>;
+    lineOptions!: ChartOptions;
 
-    pieData: any;
+    pieData!: ChartData<PieDataset>;
+    pieOptions!: ChartOptions;
 
-    polarData: any;
+    polarData!: ChartData<PieDataset>;
+    polarOptions!: ChartOptions;
 
-    radarData: any;
+    radarData!: ChartData<RadarDataset>;
+    radarOptions!: ChartOptions;
 
-    lineOptions: any;
-
-    barOptions: any;
-
-    pieOptions: any;
-
-    polarOptions: any;
-
-    radarOptions: any;
-
-    subscription: Subscription;
+    subscription!: Subscription;
     constructor(private layoutService: LayoutService) {
         this.subscription = this.layoutService.configUpdate$.pipe(debounceTime(25)).subscribe(() => {
             this.initCharts();

@@ -69,9 +69,9 @@ import { ImageCompareModule } from 'primeng/imagecompare';
 export class MediaDemo implements OnInit {
     products!: Product[];
 
-    images!: any[];
+    images!: { itemImageSrc: string; thumbnailImageSrc: string; title: string }[];
 
-    galleriaResponsiveOptions: any[] = [
+    galleriaResponsiveOptions: { breakpoint: string; numVisible: number }[] = [
         {
             breakpoint: '1024px',
             numVisible: 5
@@ -90,7 +90,7 @@ export class MediaDemo implements OnInit {
         }
     ];
 
-    carouselResponsiveOptions: any[] = [
+    carouselResponsiveOptions: { breakpoint: string; numVisible: number; numScroll: number }[] = [
         {
             breakpoint: '1024px',
             numVisible: 3,

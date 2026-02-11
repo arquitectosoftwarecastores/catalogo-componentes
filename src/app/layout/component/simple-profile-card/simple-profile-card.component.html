@@ -7,9 +7,11 @@
         title="0000000000 - Nombre de Usuario"
         class="w-full h-full object-cover object-top" />
     </div>
-    <h5 class="mt-2 mb-0 text-base font-medium text-gray-900 dark:text-white">Nombre de Usuario</h5>
-    <span class="text-sm text-gray-500">0000000000</span>
-    <span class="text-sm text-primary">Puesto</span>
-    <span class="text-[0.7rem] text-gray-400 dark:text-gray-400">Departamento</span>
+        
+    <h5 class="mt-2 mb-0 text-base font-medium text-gray-900 dark:text-white">{{  'Nombre de Usuario' | titlecase }}</h5>
+    <span class="text-sm text-primary">{{ 'Puesto' | titlecase }}</span>
+    <span class="text-[0.7rem] text-gray-700 dark:text-gray-300 font-bold">Departamento </span>
+    <span class="text-[0.8rem] text-gray-600 dark:text-gray-400">{{ 'Subdepartamento' | titlecase}}</span>
+    <span class="text-sm text-gray-400 dark:text-gray-400" style="font-size: 0.7rem;">&mdash;&nbsp;{{ '0000000000' }}&nbsp;&mdash;</span>
   </div>
 </div>

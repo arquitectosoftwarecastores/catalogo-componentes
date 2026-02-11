@@ -247,33 +247,33 @@ import { Editor } from 'primeng/editor';
     providers: [CountryService, NodeService]
 })
 export class InputDemo implements OnInit {
-    floatValue: any = null;
+    floatValue: Country | null = null;
 
-    autoValue: any[] | undefined;
+    autoValue: Country[] = [];
 
-    autoFilteredValue: any[] = [];
+    autoFilteredValue: Country[] = [];
 
-    selectedAutoValue: any = null;
+    selectedAutoValue: Country | null = null;
 
-    calendarValue: any = null;
+    calendarValue: Country | null = null;
 
-    timeValue: any = null;
+    timeValue: Country | null = null;
 
-    inputNumberValue: any = null;
+    inputNumberValue: Country | null = null;
 
     sliderValue = 50;
 
-    ratingValue: any = null;
+    ratingValue: Country | null = null;
 
     colorValue = '#1976D2';
 
-    radioValue: any = null;
+    radioValue: Country | null = null;
 
-    checkboxValue: any[] = [];
+    checkboxValue: Country[] = [];
 
     switchValue = false;
 
-    listboxValues: any[] = [
+    listboxValues: Country[] = [
         { name: 'New York', code: 'NY' },
         { name: 'Rome', code: 'RM' },
         { name: 'London', code: 'LDN' },
@@ -281,7 +281,7 @@ export class InputDemo implements OnInit {
         { name: 'Paris', code: 'PRS' }
     ];
 
-    listboxValue: any = null;
+    listboxValue: Country | null = null;
 
     dropdownValues = [
         { name: 'New York', code: 'NY' },
@@ -291,7 +291,7 @@ export class InputDemo implements OnInit {
         { name: 'Paris', code: 'PRS' }
     ];
 
-    dropdownValue: any = null;
+    dropdownValue: Country | null = null;
 
     multiselectCountries: Country[] = [
         { name: 'Australia', code: 'AU' },
@@ -310,9 +310,9 @@ export class InputDemo implements OnInit {
 
     toggleValue = false;
 
-    selectButtonValue: any = null;
+    selectButtonValue: { name: string } | null = null;
 
-    selectButtonValues: any = [{ name: 'Option 1' }, { name: 'Option 2' }, { name: 'Option 3' }];
+    selectButtonValues: { name: string }[] = [{ name: 'Option 1' }, { name: 'Option 2' }, { name: 'Option 3' }];
 
     knobValue = 50;
 
@@ -320,7 +320,7 @@ export class InputDemo implements OnInit {
 
     treeSelectNodes!: TreeNode[];
 
-    selectedNode: any = null;
+    selectedNode: TreeNode | null = null;
 
     countryService = inject(CountryService);
 
@@ -337,14 +337,12 @@ export class InputDemo implements OnInit {
     }
 
     filterCountry(event: AutoCompleteCompleteEvent) {
-        const filtered: any[] = [];
+        const filtered: Country[] = [];
 
         const query = event.query;
 
-        for (let i = 0; i < (this.autoValue as any[]).length; i++) {
-            const country = (this.autoValue as any[])[i];
-
-            if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        for (const country of this.autoValue as Country[]) {
+            if (country.name && country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
                 filtered.push(country);
             }
         }

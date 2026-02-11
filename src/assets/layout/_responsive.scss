@@ -7,7 +7,7 @@
         margin-right: auto !important;
     }
     .scrollpanel{
-        height: 70vh
+        height: calc(100vh - 26.5rem);
     }
 }
 
@@ -22,7 +22,7 @@
 
             .layout-sidebar {
                 .scrollpanel{
-                    height: 72vh
+                    height: calc(100vh - 26.5rem);
                 }
                 transform: translateX(-100%);
                 left: 0;
@@ -65,7 +65,7 @@
             }
             .layout-sidebar {
                 .scrollpanel{
-                    height: 60vh
+                    height: calc(100vh - 26.5rem);
                 }
             }
         }
@@ -89,7 +89,7 @@
 
         .layout-sidebar {
             .scrollpanel{
-                height: 60vh;
+                height: calc(100vh - 26.5rem);
             }
             transform: translateX(-100%);
             left: 0;

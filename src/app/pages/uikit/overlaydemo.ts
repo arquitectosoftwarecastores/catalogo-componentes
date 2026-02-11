@@ -9,7 +9,7 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
-import { TableModule } from 'primeng/table';
+import { TableModule, TableRowSelectEvent } from 'primeng/table';
 import { Product, ProductService } from '../service/product.service';
 
 @Component({
@@ -54,7 +54,6 @@ import { Product, ProductService } from '../service/product.service';
                             </ng-template>
                         </p-table>
                     </p-popover>
-                    <p-toast />
                 </div>
             </div>
 
@@ -141,7 +140,7 @@ import { Product, ProductService } from '../service/product.service';
     providers: [ConfirmationService, MessageService, ProductService]
 })
 export class OverlayDemo implements OnInit {
-    images: any[] = [];
+    images: { source: string; thumbnail: string; title: string }[] = [];
 
     display = false;
 
@@ -223,11 +222,11 @@ export class OverlayDemo implements OnInit {
         this.display = false;
     }
 
-    toggleDataTable(op: Popover, event: any) {
+    toggleDataTable(op: Popover, event: Event) {
         op.toggle(event);
     }
 
-    onProductSelect(op: Popover, event: any) {
+    onProductSelect(op: Popover, event: TableRowSelectEvent) {
         op.hide();
         this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: event?.data.name, life: 3000 });
     }

@@ -2,7 +2,7 @@ import { Injectable, effect, signal, computed } from '@angular/core';
 import { Subject } from 'rxjs';
 
 export interface layoutConfig {
-    preset?: string;
+    preset: string;
     primary?: string;
     surface?: string | undefined | null;
     darkTheme?: boolean;
@@ -52,7 +52,7 @@ export class LayoutService {
 
     private configUpdate = new Subject<layoutConfig>();
 
-    private overlayOpen = new Subject<any>();
+    private overlayOpen = new Subject<void>();
 
     private menuSource = new Subject<MenuChangeEvent>();
 
@@ -105,7 +105,7 @@ export class LayoutService {
     }
 
     private handleDarkModeTransition(config: layoutConfig): void {
-        if ((document as any).startViewTransition) {
+        if ('startViewTransition' in document) {
             this.startViewTransition(config);
         } else {
             this.toggleDarkMode(config);
@@ -114,21 +114,21 @@ export class LayoutService {
     }
 
     private startViewTransition(config: layoutConfig): void {
-        const transition = (document as any).startViewTransition(() => {
+        const transition = document.startViewTransition(() => {
             this.toggleDarkMode(config);
-        });
+        }) as { ready: Promise<void> };
 
         transition.ready
             .then(() => {
                 this.onTransitionEnd();
             })
-            .catch(() => {});
+            .catch(() => void 0);
     }
 
     toggleDarkMode(config?: layoutConfig): void {
-        const _config = config || this.layoutConfig();
+        const configs = config || this.layoutConfig();
 
-        if (_config.darkTheme) {
+        if (configs.darkTheme) {
             document.documentElement.classList.add('app-dark');
         } else {
             document.documentElement.classList.remove('app-dark');
@@ -147,7 +147,7 @@ export class LayoutService {
             this.layoutState.update((prev) => ({ ...prev, overlayMenuActive: !this.layoutState().overlayMenuActive }));
 
             if (this.layoutState().overlayMenuActive) {
-                this.overlayOpen.next(null);
+                this.overlayOpen.next();
             }
         }
 
@@ -157,7 +157,7 @@ export class LayoutService {
             this.layoutState.update((prev) => ({ ...prev, staticMenuMobileActive: !this.layoutState().staticMenuMobileActive }));
 
             if (this.layoutState().staticMenuMobileActive) {
-                this.overlayOpen.next(null);
+                this.overlayOpen.next();
             }
         }
     }

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MessageService, ToastMessageOptions } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
@@ -50,15 +50,13 @@ import { MessageModule } from 'primeng/message';
     `
 })
 export class MessagesDemo {
-    msgs: ToastMessageOptions[] | null = [];
-
     username: string | undefined;
 
     email: string | undefined;
 
     private _messageService: MessageService = inject(MessageService);
     private _life = 2500;
-    private message = 'Este esun mensaje';
+    private message = 'Este es un mensaje';
 
     showInfoViaToast() {
         this._messageService.add({ severity: 'info', summary: '¡Información importante!', detail: `${this.getMessage(this.message)}`, life: this._life });
