@@ -13,7 +13,7 @@
     <maven.compiler.target>1.7</maven.compiler.target>
   </properties>
   <build>
-    <finalName>sakai-ng</finalName>
+    <finalName>catalogo-componentes</finalName>
       <plugins>
 	      <plugin>
 	            <groupId>com.github.eirslett</groupId>
@@ -59,7 +59,7 @@
                 <!-- Add frontend folder to war package -->
                 <webResources>
                     <resource>
-                        <directory>/dist/sakai-ng/browser</directory>
+                        <directory>/dist/catalogo-componentes/browser</directory>
                     </resource>
                 </webResources>
     

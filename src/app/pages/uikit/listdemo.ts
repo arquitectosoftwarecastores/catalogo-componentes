@@ -8,11 +8,17 @@ import { PickListModule } from 'primeng/picklist';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TagModule } from 'primeng/tag';
 import { Product, ProductService } from '../service/product.service';
+import { ChipModule } from 'primeng/chip';
+
+export interface City {
+    name: string;
+    code: string;
+}
 
 @Component({
     selector: 'app-list-demo',
     standalone: true,
-    imports: [CommonModule, DataViewModule, FormsModule, SelectButtonModule, PickListModule, OrderListModule, TagModule, ButtonModule],
+    imports: [CommonModule, DataViewModule, FormsModule, SelectButtonModule, PickListModule, OrderListModule, TagModule, ButtonModule, ChipModule],
     template: ` <div class="flex flex-col">
         <div class="card">
             <div class="font-semibold text-xl">DataView</div>
@@ -43,20 +49,10 @@ import { Product, ProductService } from '../service/product.service';
                                             <span class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ item.category }}</span>
                                             <div class="text-lg font-medium mt-2">{{ item.name }}</div>
                                         </div>
-                                        <div class="bg-surface-100 p-1" style="border-radius: 30px">
-                                            <div
-                                                class="bg-surface-0 flex items-center gap-2 justify-center py-1 px-2"
-                                                style="
-                                                    border-radius: 30px;
-                                                    box-shadow:
-                                                        0px 1px 2px 0px rgba(0, 0, 0, 0.04),
-                                                        0px 1px 2px 0px rgba(0, 0, 0, 0.06);
-                                                "
-                                            >
-                                                <span class="text-surface-900 font-medium text-sm">{{ item.rating }}</span>
-                                                <i class="pi pi-star-fill text-yellow-500"></i>
-                                            </div>
-                                        </div>
+                                        <p-chip>
+                                            <span class="font-medium text-sm">{{ item.rating }}</span>
+                                            <i class="pi pi-star-fill text-yellow-500"></i>
+                                        </p-chip>
                                     </div>
                                     <div class="flex flex-col md:items-end gap-8">
                                         <span class="text-xl font-semibold">$ {{ item.price }}</span>
@@ -75,7 +71,7 @@ import { Product, ProductService } from '../service/product.service';
                     <div class="grid grid-cols-12 gap-4">
                         <div *ngFor="let item of items; let i = index" class="col-span-12 sm:col-span-6 lg:col-span-4 p-2">
                             <div class="p-6 border border-surface-200 dark:border-surface-700 bg-surface-0 dark:bg-surface-900 rounded flex flex-col">
-                                <div class="bg-surface-50 flex justify-center rounded p-6">
+                                <div class="flex justify-center rounded p-6">
                                     <div class="relative mx-auto">
                                         <img class="rounded w-full" src="https://primefaces.org/cdn/primevue/images/product/{{ item.image }}" [alt]="item.name" style="max-width: 300px" />
                                         <div class="absolute bg-black/70 rounded-border" [style]="{ left: '4px', top: '4px' }">
@@ -89,20 +85,10 @@ import { Product, ProductService } from '../service/product.service';
                                             <span class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ item.category }}</span>
                                             <div class="text-lg font-medium mt-1">{{ item.name }}</div>
                                         </div>
-                                        <div class="bg-surface-100 p-1" style="border-radius: 30px">
-                                            <div
-                                                class="bg-surface-0 flex items-center gap-2 justify-center py-1 px-2"
-                                                style="
-                                                    border-radius: 30px;
-                                                    box-shadow:
-                                                        0px 1px 2px 0px rgba(0, 0, 0, 0.04),
-                                                        0px 1px 2px 0px rgba(0, 0, 0, 0.06);
-                                                "
-                                            >
-                                                <span class="text-surface-900 font-medium text-sm">{{ item.rating }}</span>
-                                                <i class="pi pi-star-fill text-yellow-500"></i>
-                                            </div>
-                                        </div>
+                                        <p-chip>
+                                            <span class="font-medium text-sm">{{ item.rating }}</span>
+                                            <i class="pi pi-star-fill text-yellow-500"></i>
+                                        </p-chip>
                                     </div>
                                     <div class="flex flex-col gap-6 mt-6">
                                         <span class="text-2xl font-semibold">$ {{ item.price }}</span>
@@ -159,11 +145,11 @@ export class ListDemo implements OnInit {
 
     products: Product[] = [];
 
-    sourceCities: any[] = [];
+    sourceCities: City[] = [];
 
-    targetCities: any[] = [];
+    targetCities: City[] = [];
 
-    orderCities: any[] = [];
+    orderCities: City[] = [];
 
     constructor(private productService: ProductService) {}
 

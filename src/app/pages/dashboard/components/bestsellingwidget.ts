@@ -10,10 +10,6 @@ import { MenuModule } from 'primeng/menu';
     template: ` <div class="card">
         <div class="flex justify-between items-center mb-6">
             <div class="font-semibold text-xl">Best Selling Products</div>
-            <div>
-                <button pButton type="button" icon="pi pi-ellipsis-v" class="p-button-rounded p-button-text p-button-plain" (click)="menu.toggle($event)"></button>
-                <p-menu #menu [popup]="true" [model]="items"></p-menu>
-            </div>
         </div>
         <ul class="list-none p-0 m-0">
             <li class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">

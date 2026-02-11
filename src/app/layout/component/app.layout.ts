@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, Renderer2, ViewChild, OnChanges, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, Renderer2, ViewChild, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
@@ -26,26 +26,18 @@ import { CardTitleComponent } from './card-title/card-title.component';
         <div class="layout-mask animate-fadein"></div>
     </div> `
 })
-export class AppLayout implements OnInit, OnChanges, OnDestroy {
+export class AppLayout implements OnInit, OnDestroy {
     public _activatedRoute = inject(ActivatedRoute);
 
     overlayMenuOpenSubscription: Subscription;
 
-    menuOutsideClickListener: any;
+    menuOutsideClickListener: (() => void) | null = null;
 
     @ViewChild(AppSidebar) appSidebar!: AppSidebar;
 
     @ViewChild(AppTopbar) appTopBar!: AppTopbar;
 
     @ViewChild('scrollPanel') scrollPanel!: ScrollPanel;
-
-    ngOnChanges() {
-        console.log(
-            this._activatedRoute.url.subscribe((url) => {
-                console.log(url);
-            })
-        );
-    }
 
     ngOnInit() {
         this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
@@ -58,8 +50,7 @@ export class AppLayout implements OnInit, OnChanges, OnDestroy {
     constructor(
         public layoutService: LayoutService,
         public renderer: Renderer2,
-        public router: Router,
-        private route: ActivatedRoute
+        public router: Router
     ) {
         this.overlayMenuOpenSubscription = this.layoutService.overlayOpen$.subscribe(() => {
             if (!this.menuOutsideClickListener) {

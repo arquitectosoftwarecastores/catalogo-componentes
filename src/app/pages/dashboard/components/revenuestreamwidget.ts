@@ -3,6 +3,69 @@ import { ChartModule } from 'primeng/chart';
 import { debounceTime, Subscription } from 'rxjs';
 import { LayoutService } from '../../../layout/service/layout.service';
 
+export interface ChartBorderRadius {
+    topLeft: number;
+    topRight: number;
+    bottomLeft: number;
+    bottomRight: number;
+}
+
+export interface ChartDataset {
+    type: 'bar' | 'line' | 'pie';
+    label: string;
+    backgroundColor: string;
+    data: number[];
+    barThickness?: number;
+    borderRadius?: number | ChartBorderRadius;
+    borderSkipped?: boolean | string;
+}
+
+export interface ChartData {
+    labels: string[];
+    datasets: ChartDataset[];
+}
+
+export interface ChartLegendLabels {
+    color: string;
+}
+
+export interface ChartLegend {
+    labels: ChartLegendLabels;
+}
+
+export interface ChartPlugins {
+    legend?: ChartLegend;
+}
+
+export interface ChartAxisGrid {
+    color?: string;
+    borderColor?: string;
+    drawTicks?: boolean;
+}
+
+export interface ChartAxisTicks {
+    color: string;
+}
+
+export interface ChartAxis {
+    stacked?: boolean;
+    ticks?: ChartAxisTicks;
+    grid?: ChartAxisGrid;
+}
+
+export interface ChartScales {
+    x?: ChartAxis;
+    y?: ChartAxis;
+    [key: string]: ChartAxis | undefined; // Permite ejes adicionales si fuera necesario
+}
+
+export interface ChartOptions {
+    maintainAspectRatio?: boolean;
+    aspectRatio?: number;
+    plugins?: ChartPlugins;
+    scales?: ChartScales;
+}
+
 @Component({
     standalone: true,
     selector: 'app-revenue-stream-widget',
@@ -13,9 +76,9 @@ import { LayoutService } from '../../../layout/service/layout.service';
     </div>`
 })
 export class RevenueStreamWidget implements OnInit, OnDestroy {
-    chartData: any;
+    chartData: ChartData | undefined;
 
-    chartOptions: any;
+    chartOptions: ChartOptions | undefined;
 
     subscription!: Subscription;
 

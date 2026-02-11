@@ -1,16 +1,17 @@
 {
 	"type": "module",
-	"name": "sakai-ng",
+	"name": "catalogo-componentes",
 	"version": "19.0.0",
 	"scripts": {
 		"ng": "ng",
-		"start": "ng serve --host 0.0.0.0 --port 4200",
-		"build": "ng build ",
-		"buildProductionGlass": "ng build --configuration production --aot --output-hashing=all --base-href /sakai-ng/",
+		"start": "npm run lint:fix && ng serve --host 0.0.0.0 --port 4200",
+		"build": "npm run lint && ng build && mvn install",
+		"buildProductionGlass": "ng build --configuration production --aot --output-hashing=all --base-href /catalogo-componentes/",
 		"watch": "ng build --watch --configuration development",
 		"format": "prettier --write \"**/*.{js,mjs,ts,mts,d.ts,html}\" --cache",
 		"test": "ng test",
-		"lint": "eslint \"src/**/*.ts\""
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix"
 	},
 	"private": true,
 	"dependencies": {

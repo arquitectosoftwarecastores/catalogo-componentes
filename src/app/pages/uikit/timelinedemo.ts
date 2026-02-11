@@ -103,9 +103,9 @@ import { ButtonModule } from 'primeng/button';
     </div>`
 })
 export class TimelineDemo implements OnInit {
-    events1: any[] = [];
+    events1: { status: string; date: string; icon: string; color: string; image?: string }[] = [];
 
-    events2: any[] = [];
+    events2: string[] = [];
 
     ngOnInit() {
         this.events1 = [
