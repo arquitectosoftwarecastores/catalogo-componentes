@@ -70,10 +70,7 @@ export interface ChartOptions {
     standalone: true,
     selector: 'app-revenue-stream-widget',
     imports: [ChartModule],
-    template: `<div class="card !mb-8">
-        <div class="font-semibold text-xl mb-4">Revenue Stream</div>
-        <p-chart type="bar" [data]="chartData" [options]="chartOptions" class="h-80" />
-    </div>`
+    templateUrl: './revenuestreamwidget.html'
 })
 export class RevenueStreamWidget implements OnInit, OnDestroy {
     chartData: ChartData | undefined;

@@ -12,19 +12,7 @@ import { CardTitleComponent } from './card-title/card-title.component';
     selector: 'app-layout',
     standalone: true,
     imports: [CommonModule, AppTopbar, AppSidebar, RouterModule, ScrollPanel, CardTitleComponent],
-    template: `<div class="layout-wrapper" [ngClass]="containerClass">
-        <app-topbar></app-topbar>
-        <app-sidebar></app-sidebar>
-        <p-scroll-panel #scrollPanel class="layout-main-container" [style]="{ height: 'calc(100vh - 8rem)' }">
-            <div class="layout-main">
-                @if (layoutService.showCardTitle()) {
-                    <app-card-title />
-                }
-                <router-outlet></router-outlet>
-            </div>
-        </p-scroll-panel>
-        <div class="layout-mask animate-fadein"></div>
-    </div> `
+    templateUrl: './app.layout.html'
 })
 export class AppLayout implements OnInit, OnDestroy {
     public _activatedRoute = inject(ActivatedRoute);

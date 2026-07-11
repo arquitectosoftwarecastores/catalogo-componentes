@@ -12,52 +12,7 @@ import { LogoCastoresSvgComponent } from './logo-castores-svg/logo-castores-svg.
     selector: 'app-topbar',
     standalone: true,
     imports: [Menu, RouterModule, CommonModule, StyleClassModule, AppConfigurator, LogoCastoresSvgComponent],
-    template: ` <div class="layout-topbar">
-        <div class="layout-topbar-logo-container">
-            <button class="layout-menu-button layout-topbar-action" (click)="layoutService.onMenuToggle()">
-                <i class="pi pi-bars"></i>
-            </button>
-            <a [routerLink]="'/'" class="sidebar-brand d-flex justify-content-center">
-                <app-logo-castores-svg color="white" height="3rem" class="mt-[.1rem]" />
-            </a>
-        </div>
-
-        <div class="layout-topbar-actions">
-            <div class="layout-config-menu">
-                <button type="button" class="layout-topbar-action" (click)="toggleDarkMode()">
-                    <i [ngClass]="{ 'pi ': true, 'pi-moon': layoutService.isDarkTheme(), 'pi-sun': !layoutService.isDarkTheme() }"></i>
-                </button>
-                <div class="relative">
-                    <button class="layout-topbar-action " pStyleClass="@next" enterFromClass="hidden" enterActiveClass="animate-scalein" leaveToClass="hidden" leaveActiveClass="animate-fadeout" [hideOnOutsideClick]="true">
-                        <i class="pi pi-palette"></i>
-                    </button>
-                    <app-configurator />
-                </div>
-
-                <div class="options-page">
-                    <button type="button" class="layout-topbar-action" (click)="menu.toggle($event)">
-                        <i class="pi pi-user"></i>
-                    </button>
-                    <p-menu [model]="items" #menu popup="true" styleClass="top-menu-dropdown">
-                        <ng-template #item let-item>
-                            <ng-container *ngIf="item.route; else elseBlock">
-                                <a [routerLink]="item.route" class="p-menu-item-link">
-                                    <span [class]="item.icon"></span>
-                                    <span class="ml-2">{{ item.label }}</span>
-                                </a>
-                            </ng-container>
-                            <ng-template #elseBlock>
-                                <a [href]="item.url" class="p-menu-item-link">
-                                    <span [class]="item.icon"></span>
-                                    <span class="ml-2">{{ item.label }}</span>
-                                </a>
-                            </ng-template>
-                        </ng-template>
-                    </p-menu>
-                </div>
-            </div>
-        </div>
-    </div>`
+    templateUrl: './app.topbar.html'
 })
 export class AppTopbar implements OnInit {
     public items: MenuItem[] | undefined;
