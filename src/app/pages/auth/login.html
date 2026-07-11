@@ -12,7 +12,7 @@
                             <form [formGroup]="formLogin">
                                 <div class="mb-10">
                                     <p-floatlabel class="p-floatlabel p-floatlabel-over">
-                                        <input pInputText id="username" formControlName="username" type="text" class="w-full {{ !isDataValid && formLogin.controls['username'].errors?.['required'] ? 'ng-invalid ng-dirty' : '' }}" autofocus />
+                                        <input pInputText id="username" formControlName="username" type="text" class="w-full {{ !isDataValid && formLogin.controls['username'].errors?.['required'] ? 'ng-invalid ng-dirty' : '' }}" />
                                         <label for="username" class="text-surface-900 dark:text-surface-0 ">Usuario</label>
                                     </p-floatlabel>
                                     @if (!isDataValid && formLogin.controls['username'].errors?.['required']) {

@@ -36,7 +36,7 @@
                     <div class="font-semibold text-xl">TimePicker</div>
                     <p-datepicker [showIcon]="true" iconDisplay="input" [(ngModel)]="timeValue" [timeOnly]="true">
                         <ng-template #inputicon let-clickCallBack="clickCallBack">
-                            <i class="pi pi-clock" (click)="clickCallBack($event)"></i>
+                            <i class="pi pi-clock" role="button" tabindex="0" (click)="clickCallBack($event)" (keydown.enter)="clickCallBack($event)"></i>
                         </ng-template>
                     </p-datepicker>
 

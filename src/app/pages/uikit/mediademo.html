@@ -28,10 +28,10 @@
             <div class="card flex col-lg-2">
                 <p-imagecompare class="shadow-lg rounded-2xl">
                     <ng-template #left>
-                        <img src="https://primefaces.org/cdn/primevue/images/compare/island1.jpg" />
+                        <img src="https://primefaces.org/cdn/primevue/images/compare/island1.jpg" alt="Island before" />
                     </ng-template>
                     <ng-template #right>
-                        <img src="https://primefaces.org/cdn/primevue/images/compare/island2.jpg" />
+                        <img src="https://primefaces.org/cdn/primevue/images/compare/island2.jpg" alt="Island after" />
                     </ng-template>
                 </p-imagecompare>
             </div>
@@ -40,10 +40,10 @@
                 <div class="font-semibold text-xl mb-4">Galleria</div>
                 <p-galleria [value]="images" [responsiveOptions]="galleriaResponsiveOptions" [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5">
                     <ng-template #item let-item>
-                        <img [src]="item.itemImageSrc" style="width:100%" />
+                        <img [src]="item.itemImageSrc" [alt]="item.title" style="width:100%" />
                     </ng-template>
                     <ng-template #thumbnail let-item>
-                        <img [src]="item.thumbnailImageSrc" />
+                        <img [src]="item.thumbnailImageSrc" [alt]="item.title" />
                     </ng-template>
                 </p-galleria>
             </div>
