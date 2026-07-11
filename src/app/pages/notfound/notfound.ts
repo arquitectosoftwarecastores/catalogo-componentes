@@ -7,27 +7,6 @@ import { AppFloatingConfigurator } from '../../layout/component/app.floatingconf
     selector: 'app-notfound',
     standalone: true,
     imports: [RouterModule, AppFloatingConfigurator, ButtonModule],
-    template: ` <app-floating-configurator />
-        <div class="flex items-center justify-center min-h-screen overflow-hidden">
-            <div class="flex flex-col items-center justify-center">
-                <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, color-mix(in srgb, var(--primary-color), transparent 60%) 10%, var(--surface-ground) 30%)">
-                    <div class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20 flex flex-col items-center" style="border-radius: 53px">
-                        <span class="text-primary font-bold text-[6rem]">404</span>
-                        <h1 class="text-surface-900 dark:text-surface-0 font-bold text-2xl lg:text-4xl mb-2">No Encontrado</h1>
-                        <div class="text-surface-600 dark:text-surface-200 mb-4">Recurso solicitado no disponible.</div>
-                        <div class="w-full flex items-center mb-8 py-8 border-surface-300 dark:border-surface-500 border-b">
-                            <span class="flex justify-center items-center border-2 border-primary text-primary rounded-border h-[3.5rem] w-[3.5rem]">
-                                <i class="pi pi-fw pi-compass !text-2xl"></i>
-                            </span>
-                            <span class="ml-6 flex flex-col">
-                                <span class="text-surface-900 dark:text-surface-0 lg:text-xl font-medium mb-0">Pagina no encontrada</span>
-                                <span class="text-surface-600 dark:text-surface-200 lg:text-xl">Intente de nuevo mas tarde.</span>
-                            </span>
-                        </div>
-                        <p-button class="mr-2" label="Al inicio" routerLink="/" />
-                    </div>
-                </div>
-            </div>
-        </div>`
+    templateUrl: './notfound.html'
 })
 export class Notfound {}
