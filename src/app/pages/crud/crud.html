@@ -1,139 +1,175 @@
-<div class="card">
-    <h5 class="m-0">Manage Products</h5>
-    <p-table
-        #dt
-        [scrollable]="true"
-        scrollHeight="50vh"
-        [value]="products()"
-        [rows]="10"
-        [columns]="cols"
-        [paginator]="true"
-        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
-        [tableStyle]="{ 'min-height': '50vh' }"
-        [(selection)]="selectedProducts"
-        [rowHover]="true"
-        dataKey="id"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-        [showCurrentPageReport]="true"
-        [rowsPerPageOptions]="[10, 20, 30]"
-    >
+<div class="card filter">
+
+    <div class="font-semibold text-sm mb-6">Search filters</div>
+
+    <div class="flex justify-between items-center w-full">            
+        <div class="flex gap-4">
+            <p-floatlabel class="p-floatlabel p-floatlabel-over">
+                <p-datepicker
+                    selectionMode="range"
+                    [showIcon]="true">
+                </p-datepicker>
+                <label for="over_label">Date range</label>
+            </p-floatlabel>
+            
+            <p-floatlabel class="p-floatlabel p-floatlabel-over">
+                <input pInputText type="text" id="over_label" />
+                <label for="over_label">Category</label>
+            </p-floatlabel>
+        </div>
+    
+        <p-button class="pr-4" label="Search" icon="pi pi-search" [loading]="loading" (onClick)="load()" />
         
-        <ng-template #caption>
-            <div class="flex items-center justify-between">
-                <div>
-                    <p-iconfield style="display: inline">
-                        <p-inputicon styleClass="pi pi-search" />
-                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." #globalFilterInput/>
-                    </p-iconfield>
-                    <button pButton label="Limpiar" class="p-button-outlined ml-2" icon="pi pi-filter-slash" (click)="clear(dt, globalFilterInput)"></button>
-                </div>
-                <div>
-                    <p-button class="ml-2" icon="pi pi-plus" severity="primary" (onClick)="openNew()" />
-                    <p-button class="ml-2" icon="pi pi-trash" severity="secondary" outlined (onClick)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length" />
-                    <p-button class="ml-2" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
-                </div>
-            </div>
-        </ng-template>
-        <ng-template #header>
-            <tr>
-                <th style="width: 3rem">
-                    <p-tableHeaderCheckbox />
-                </th>
-                <th pSortableColumn="code" style="min-width: 16rem">
-                    <div class="flex justify-between items-center">
-                        Code
-                        <div>
-                            <p-sortIcon field="code" />
-                            <p-columnFilter type="text" field="code" display="menu" placeholder="Search by code"></p-columnFilter>
-                        </div>
-                    </div>
-                    
-                </th>
-                <th pSortableColumn="name" style="min-width: 16rem">
-                    <div class="flex justify-between items-center">
-                        Name
-                        <div>
-                            <p-sortIcon field="name" />
-                            <p-columnFilter type="text" field="name" display="menu" placeholder="Search by name"></p-columnFilter> 
-                        </div>
-                    </div>    
-                </th>
-                <th>Image</th>
-                <th pSortableColumn="price" style="min-width: 8rem">
-                    <div class="flex justify-between items-center">
-                        Price
-                        <div>
-                            <p-sortIcon field="price" />
-                            <p-columnFilter type="numeric" field="price" display="menu" placeholder="Search by price"></p-columnFilter> 
-                        </div>
-                    </div>  
-                </th>
-                <th pSortableColumn="category" style="min-width: 10rem">
-                    <div class="flex justify-between items-center">
-                        Category
-                        <div>
-                           <p-sortIcon field="category" />
-                            <p-columnFilter type="text" field="category" display="menu" placeholder="Search by category"></p-columnFilter> 
-                        </div>
-                    </div>
-                </th>
-                <th pSortableColumn="rating" style="min-width: 12rem">
-                    <div class="flex justify-between items-center">
-                        Reviews
-                        <div>
-                            <p-sortIcon field="rating" /> 
-                            <p-columnFilter type="numeric" field="rating" display="menu" placeholder="Search by rating"></p-columnFilter>    
-                        </div>
-                    </div>
-                    
-                    
-                </th>
-                <th pSortableColumn="inventoryStatus" style="min-width: 12rem">
-                    <div class="flex justify-between items-center">
-                        Status
-                        <div>
-                            <p-sortIcon field="inventoryStatus" />   
-                            <p-columnFilter field="inventoryStatus" matchMode="equals" display="menu">
-                                <ng-template #filter let-value let-filter="filterCallback">
-                                    <p-select [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any" [style]="{ 'min-width': '12rem' }">
-                                        <ng-template let-option #item>
-                                            <span [class]="'customer-badge status-' + option.label">{{ option.label }}</span>
-                                        </ng-template>
-                                    </p-select>
-                                </ng-template>
-                            </p-columnFilter>
-                        </div>
-                    </div>
-                </th>
-                <th style="min-width: 12rem"></th>
-            </tr>
-        </ng-template>
-        <ng-template #body let-product style="height: 50vh">
-            <tr>
-                <td style="width: 3rem">
-                    <p-tableCheckbox [value]="product" />
-                </td>
-                <td style="min-width: 12rem">{{ product.code }}</td>
-                <td style="min-width: 16rem">{{ product.name }}</td>
-                <td>
-                    <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.name" style="width: 64px" class="rounded" />
-                </td>
-                <td>{{ product.price | currency: 'USD' }}</td>
-                <td>{{ product.category }}</td>
-                <td>
-                    <p-rating [(ngModel)]="product.rating" [readonly]="true" />
-                </td>
-                <td>
-                    <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)" />
-                </td>
-                <td>
-                    <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" (click)="editProduct(product)" />
-                    <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (click)="deleteProduct(product)" />
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+    </div>
+
+
+    
 </div>
+
+    <div class="card">
+        @if (visible) {
+        <p-table
+            #dt
+            [scrollable]="true"
+            scrollHeight="48vh"
+            [value]="products()"
+            [rows]="10"
+            [columns]="cols"
+            [paginator]="true"
+            [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+            [tableStyle]="{ 'min-height': '48vh' }"
+            [(selection)]="selectedProducts"
+            [rowHover]="true"
+            dataKey="id"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+            [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10, 20, 30]"
+        >
+            
+            <ng-template #caption>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p-iconfield style="display: inline">
+                            <p-inputicon styleClass="pi pi-search" />
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." #globalFilterInput/>
+                        </p-iconfield>
+                        <button pButton label="Clear" class="p-button-outlined ml-2" icon="pi pi-filter-slash" (click)="clear(dt, globalFilterInput)"></button>
+                    </div>
+                    <div>
+                        <p-button class="ml-2" icon="pi pi-plus" severity="primary" (onClick)="openNew()" />
+                        <p-button class="ml-2" icon="pi pi-trash" severity="secondary" outlined (onClick)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length" />
+                        <p-button class="ml-2" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #header>
+                <tr>
+                    <th style="width: 3rem">
+                        <p-tableHeaderCheckbox />
+                    </th>
+                    <th pSortableColumn="code" style="min-width: 16rem">
+                        <div class="flex justify-between items-center">
+                            Code
+                            <div>
+                                <p-sortIcon field="code" />
+                                <p-columnFilter type="text" field="code" display="menu" placeholder="Search by code"></p-columnFilter>
+                            </div>
+                        </div>
+                        
+                    </th>
+                    <th pSortableColumn="name" style="min-width: 16rem">
+                        <div class="flex justify-between items-center">
+                            Name
+                            <div>
+                                <p-sortIcon field="name" />
+                                <p-columnFilter type="text" field="name" display="menu" placeholder="Search by name"></p-columnFilter> 
+                            </div>
+                        </div>    
+                    </th>
+                    <th>Image</th>
+                    <th pSortableColumn="price" style="min-width: 8rem">
+                        <div class="flex justify-between items-center">
+                            Price
+                            <div>
+                                <p-sortIcon field="price" />
+                                <p-columnFilter type="numeric" field="price" display="menu" placeholder="Search by price"></p-columnFilter> 
+                            </div>
+                        </div>  
+                    </th>
+                    <th pSortableColumn="category" style="min-width: 10rem">
+                        <div class="flex justify-between items-center">
+                            Category
+                            <div>
+                            <p-sortIcon field="category" />
+                                <p-columnFilter type="text" field="category" display="menu" placeholder="Search by category"></p-columnFilter> 
+                            </div>
+                        </div>
+                    </th>
+                    <th pSortableColumn="rating" style="min-width: 12rem">
+                        <div class="flex justify-between items-center">
+                            Reviews
+                            <div>
+                                <p-sortIcon field="rating" /> 
+                                <p-columnFilter type="numeric" field="rating" display="menu" placeholder="Search by rating"></p-columnFilter>    
+                            </div>
+                        </div>
+                        
+                        
+                    </th>
+                    <th pSortableColumn="inventoryStatus" style="min-width: 12rem">
+                        <div class="flex justify-between items-center">
+                            Status
+                            <div>
+                                <p-sortIcon field="inventoryStatus" />   
+                                <p-columnFilter field="inventoryStatus" matchMode="equals" display="menu">
+                                    <ng-template #filter let-value let-filter="filterCallback">
+                                        <p-select [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any" [style]="{ 'min-width': '12rem' }">
+                                            <ng-template let-option #item>
+                                                <span [class]="'customer-badge status-' + option.label">{{ option.label }}</span>
+                                            </ng-template>
+                                        </p-select>
+                                    </ng-template>
+                                </p-columnFilter>
+                            </div>
+                        </div>
+                    </th>
+                    <th style="min-width: 12rem"></th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-product style="height: 50vh">
+                <tr>
+                    <td style="width: 3rem">
+                        <p-tableCheckbox [value]="product" />
+                    </td>
+                    <td style="min-width: 12rem">{{ product.code }}</td>
+                    <td style="min-width: 16rem">{{ product.name }}</td>
+                    <td>
+                        <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.name" style="width: 64px" class="rounded" />
+                    </td>
+                    <td>{{ product.price | currency: 'USD' }}</td>
+                    <td>{{ product.category }}</td>
+                    <td>
+                        <p-rating [(ngModel)]="product.rating" [readonly]="true" />
+                    </td>
+                    <td>
+                        <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)" />
+                    </td>
+                    <td>
+                        <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" (click)="editProduct(product)" />
+                        <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (click)="deleteProduct(product)" />
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    }
+    @else{
+        <div class="text-center">
+            <i class="pi pi-search mt-3 text-gray-400" style="font-size: 2.5rem"></i>
+            <h4 class="text-gray-400"> Choose a filter to view products</h4>
+        </div>
+    }
+    </div>
+
 
 <p-dialog appendTo="body" [(visible)]="productDialog" [style]="{ width: '450px' }" header="Product Details" [modal]="true">
     <ng-template #content>
