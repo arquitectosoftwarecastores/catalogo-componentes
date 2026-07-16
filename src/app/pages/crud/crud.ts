@@ -19,6 +19,8 @@ import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Product, ProductService } from '../service/product.service';
+import { DatePicker } from "primeng/datepicker";
+import { FloatLabel } from 'primeng/floatlabel';
 
 interface Column {
     field: string;
@@ -35,30 +37,37 @@ interface ExportColumn {
     selector: 'app-crud',
     standalone: true,
     imports: [
-        CommonModule,
-        TableModule,
-        FormsModule,
-        ButtonModule,
-        RippleModule,
-        ToastModule,
-        ToolbarModule,
-        RatingModule,
-        InputTextModule,
-        TextareaModule,
-        SelectModule,
-        RadioButtonModule,
-        InputNumberModule,
-        DialogModule,
-        TagModule,
-        InputIconModule,
-        IconFieldModule,
-        ConfirmDialogModule
-    ],
+    CommonModule,
+    TableModule,
+    FormsModule,
+    ButtonModule,
+    RippleModule,
+    ToastModule,
+    ToolbarModule,
+    RatingModule,
+    InputTextModule,
+    TextareaModule,
+    SelectModule,
+    RadioButtonModule,
+    InputNumberModule,
+    DialogModule,
+    TagModule,
+    InputIconModule,
+    IconFieldModule,
+    ConfirmDialogModule,
+    DatePicker,
+    FloatLabel
+
+],
     templateUrl: './crud.html',
     providers: [MessageService, ProductService, ConfirmationService]
 })
 export class Crud implements OnInit {
     productDialog = false;
+
+    visible: boolean = false;
+
+    loading: boolean = false;
 
     products = signal<Product[]>([]);
 
@@ -81,6 +90,16 @@ export class Crud implements OnInit {
         private messageService: MessageService,
         private confirmationService: ConfirmationService
     ) {}
+
+    load() {
+        this.loading = true;
+
+        setTimeout(() => {
+            this.loading = false
+            this.visible = true;
+        }, 1000);
+        
+    }
 
     exportCSV() {
         this.dt.exportCSV();
